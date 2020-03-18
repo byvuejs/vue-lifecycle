@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Do it! Vue.js 입문</title>
+    </head>
+    <body>
+        <h2>뷰 라우터 실습</h2>
+        <div id="app">
+            <p>
+                <!-- (1) URL 값을 변경하는 태그 -->
+                <router-link to="/main">Main 컴포넌트 이동</router-link>
+                <router-link to="/login">Login 컴포넌트 이동</router-link>
+            </p>
+            <!-- (2) URL 값에 따라 갱신되는 화면 영역 -->
+            <router-view></router-view>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+        <script src="https://unpkg.com/vue-router@3.0.1/dist/vue-router.js"></script>
+        <script>
+            // (3) Main, Login 컴포넌트 정의
+            var Main = { template: '<div>main</div>' };
+            var Login = { template: '<div>login</div>' };
+
+            // (4) 각 URL에 맞춰 표시할 컴포넌트 지정
+            var routes = [
+                { path: '/main', component: Main },
+                { path: '/login', component: Login }
+            ];
+
+            // (5) 뷰 라우터 정의
+            var router = new VueRouter({
+                mode: 'history', // 히스토리 모드
+                routes
+            });
+
+            // (6) 뷰 인스턴스에 라우터 추가
+            var app = new Vue({
+                router
+            }).$mount('#app');
+
+            /* $mount() API란 ?
+            * $mount() API는 el 속성과 동일하게 인스턴스를 화면에 붙이는 역할을 합니다.
+            * 인스턴스를 생성할 때 el 속성을 넣지 않았더라도 생성하고 나서 $mount()를 이용하면 강제로 인스턴스를 화면에 붙일 수가 있습니다.
+            * 참고로, 뷰 라우터의 공식 문서는 모두 인스턴스 안에 el을 지정하지 않고 라우터만 지정하여 생성
+            * 다음 생성된 인스턴스를 $mount()를 이용해 붙이는 식으로 안내하고 있습니다.
+            */
+
+            /* 라우터 URL의 해시 값(#)을 없애는 방법
+            * 뷰 라우터의 기본 URL 형식은 해시 값을 사용합니다.
+            * 만약 index.html/login과 같이 해시 값을 없애고 싶으면
+            * VueRouter에 mode: 'history' 히스토리 모드로를 활용하면 됩니다.
+            */
+        </script>
+    </body>
+</html>
